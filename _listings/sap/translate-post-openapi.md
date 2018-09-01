@@ -3,15 +3,11 @@ swagger: "2.0"
 x-collection-name: SAP
 x-complete: 0
 info:
-  title: SAP Translation Hub Returns a list of the text types available in SAP Translation
-    Hub.
-  description: In SAP products, short texts, such as those used on user interfaces
-    (UIs), are characterized by various text types. The type of a specific text is
-    determined by the UI element that it describes. For example,  button texts are
-    described by the text type ```XBUT```. <br> The text type resource returns a list
-    of the text types that are available in SAP Translation Hub. You can combine the
-    '/text type' resource with the '/suggestion' resource to narrow down the results
-    of the suggestion resource.
+  title: SAP Translation Hub The '/translate' resource enables you to get translations
+    of English short texts that exist in SAP Translation Hub.
+  description: Provides translations of short texts based on a combination of existing
+    texts and their translations that are used in SAP products and machine translation
+    capabilities.
   contact:
     name: SAP Translation Hub team
     email: translationhub@sap.com
@@ -1255,6 +1251,48 @@ paths:
       - Text
       - Types
       - Available
+      - In
+      - SAP
+      - Translation
+      - Hub
+  /translate:
+    post:
+      summary: The '/translate' resource enables you to get translations of English
+        short texts that exist in SAP Translation Hub.
+      description: Provides translations of short texts based on a combination of
+        existing texts and their translations that are used in SAP products and machine
+        translation capabilities.
+      operationId: provides-translations-of-short-texts-based-on-a-combination-of-existing-texts-and-their-translations
+      x-api-path-slug: translate-post
+      parameters:
+      - in: header
+        name: Content-Type
+        description: Specifies the nature of the data in the body so that the receiving
+          agent can process the data accordingly
+      - in: body
+        name: translate
+        description: The JSON request contains an array of ```units``` JSON objects
+        schema:
+          $ref: '#/definitions/holder'
+      responses:
+        200:
+          description: Successful response
+      tags:
+      - The
+      - ""
+      - Translate
+      - Resource
+      - Enables
+      - You
+      - To
+      - Get
+      - Translations
+      - Of
+      - English
+      - Short
+      - Texts
+      - That
+      - Exist
       - In
       - SAP
       - Translation

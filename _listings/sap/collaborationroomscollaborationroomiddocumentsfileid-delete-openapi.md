@@ -3,21 +3,12 @@ swagger: "2.0"
 x-collection-name: SAP
 x-complete: 0
 info:
-  title: SAP Translation Hub Returns a list of the text types available in SAP Translation
-    Hub.
-  description: In SAP products, short texts, such as those used on user interfaces
-    (UIs), are characterized by various text types. The type of a specific text is
-    determined by the UI element that it describes. For example,  button texts are
-    described by the text type ```XBUT```. <br> The text type resource returns a list
-    of the text types that are available in SAP Translation Hub. You can combine the
-    '/text type' resource with the '/suggestion' resource to narrow down the results
-    of the suggestion resource.
-  contact:
-    name: SAP Translation Hub team
-    email: translationhub@sap.com
+  title: SAP Manufacturing Network Partner APIs Deletes a document
+  description: "Deletes a document.  \nThe login technical user must be the one who
+    uploaded the document."
   version: 1.0.0
-host: sandbox.api.sap.com
-basePath: /translationhub/api/v1
+host: hostname
+basePath: /dim/api
 schemes:
 - http
 produces:
@@ -648,7 +639,7 @@ paths:
       - File
   /documents/collaborationRooms/{collaborationRoomId}/upload:
     post:
-      summary: Uploads a file
+      summary: Uploads a file to a collaboration room
       description: Uploads a file to a collaboration room.
       operationId: uploads-a-file-to-a-collaboration-room
       x-api-path-slug: documentscollaborationroomscollaborationroomidupload-post
@@ -669,6 +660,9 @@ paths:
       tags:
       - Uploads
       - File
+      - To
+      - Collaboration
+      - Room
   /documents/collaborationRooms/{collaborationRoomId}/thumbnail/download:
     get:
       summary: Downloads the thumbnail of a design file
@@ -865,7 +859,7 @@ paths:
       parameters:
       - in: path
         name: organizationId
-        description: The ID of an organization
+        description: The ID of the login users organization
       responses:
         200:
           description: Successful response
@@ -898,14 +892,18 @@ paths:
   /organizations/{organizationId}/collaborationRooms:
     get:
       summary: Retrieves the collaboration rooms of an organization
-      description: Retrieves the collaboration rooms where an organization is a collaboration
-        party.
-      operationId: retrieves-the-collaboration-rooms-where-an-organization-is-a-collaboration-party---
+      description: "Retrieves the collaboration rooms where the login user's organization
+        is a collaboration party.   \n- If the login user is not an organization admin,
+        only the collaboration rooms where the login user is a participant are retrieved.
+        \  \n- If the login user is an organization admin, all the collaboration rooms
+        where the login user's organization is a collaboration party are retrieved.
+        The login user may not be part of the collaborations."
+      operationId: retrieves-the-collaboration-rooms-where-the-login-users-organization-is-a-collaboration-party----if-
       x-api-path-slug: organizationsorganizationidcollaborationrooms-get
       parameters:
       - in: path
         name: organizationId
-        description: The ID of an organization
+        description: The ID of the login users organization
       - in: query
         name: organizationIds
         description: The IDs of other organizations
@@ -921,13 +919,17 @@ paths:
   /organizations/{organizationId}/collaborationRooms/owned:
     get:
       summary: Retrieves the collaboration rooms created by an organization
-      description: Retrieves the collaboration rooms created and owned by an organization.
-      operationId: retrieves-the-collaboration-rooms-created-and-owned-by-an-organization--
+      description: "Retrieves the collaboration rooms created and owned by an organization.
+        \ \n- If the login user is not an organization admin, only the collaboration
+        rooms where the login user is a participant are retrieved.  \n- If the login
+        user is an organization admin, all the collaboration rooms owned by the login
+        user's organization are retrieved."
+      operationId: retrieves-the-collaboration-rooms-created-and-owned-by-an-organization---if-the-login-user-is-not-an
       x-api-path-slug: organizationsorganizationidcollaborationroomsowned-get
       parameters:
       - in: path
         name: organizationId
-        description: The ID of the owner organization
+        description: The ID of the login users organization
       - in: query
         name: organizationIds
         description: The IDs of other organizations
@@ -1044,221 +1046,6 @@ paths:
       - Users
       - Collaboration
       - Rooms
-  /partsAnalysis/worklists/{worklistId}:
-    get:
-      summary: Retrieves a parts analysis worklist
-      description: "Retrieves a parts analysis worklist.  \nThe analysis is made to
-        identify parts that are suitable for additive manufacturing."
-      operationId: retrieves-a-parts-analysis-worklist--the-analysis-is-made-to-identify-parts-that-are-suitable-for-ad
-      x-api-path-slug: partsanalysisworklistsworklistid-get
-      parameters:
-      - in: query
-        name: $format
-        description: Specifies the response format
-      - in: path
-        name: worklistId
-        description: The UUID for a published worklist
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - Retrieves
-      - Parts
-      - Analysis
-      - Worklist
-  /partsAnalysis/worklists/{worklistId}/parts/{partId}:
-    put:
-      summary: Updates a part
-      description: Updates a part in a worklist
-      operationId: updates-a-part-in-a-worklist
-      x-api-path-slug: partsanalysisworklistsworklistidpartspartid-put
-      parameters:
-      - in: path
-        name: partId
-        description: A self-generated ID for a part in the worklist
-      - in: body
-        name: PartsAnalysisUpdateDTO
-        description: A request about updating a parts analysis worklist
-        schema:
-          $ref: '#/definitions/holder'
-      - in: path
-        name: worklistId
-        description: The UUID for a published worklist
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - S
-      - Part
-  /partsAnalysis/worklists/{worklistId}/parts/{partId}/designFiles/{designFileId}:
-    get:
-      summary: Downloads the design file of a part
-      description: Downloads the design file for a part
-      operationId: downloads-the-design-file-for-a-part
-      x-api-path-slug: partsanalysisworklistsworklistidpartspartiddesignfilesdesignfileid-get
-      parameters:
-      - in: path
-        name: designFileId
-        description: A self-generated ID for a design file
-      - in: path
-        name: partId
-        description: A self-generated ID for a part in the worklist
-      - in: path
-        name: worklistId
-        description: The UUID for a published worklist
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - Downloads
-      - Design
-      - File
-      - Of
-      - Part
-  /domains:
-    get:
-      summary: SAP product domains
-      description: SAP product terminology is organized by domains. Domains are used
-        in the translation process to determine the correct terminology for a given
-        application. <br> This resource returns a list of the domains and domain groups
-        that are available in SAP Translation Hub.<br> You can combine the domain
-        resource with the translation resource to more accurately reflect the subject
-        area of your texts.
-      operationId: sap-product-terminology-is-organized-by-domains-domains-are-used-in-the-translation-process-to-deter
-      x-api-path-slug: domains-get
-      parameters:
-      - in: header
-        name: Content-Type
-        description: Specifies the nature of the data in the body so that the receiving
-          agent can process the data accordingly
-      - in: query
-        name: onlyGroups
-        description: Shows a list of the domain groups that SAP Translation Hub supports
-      - in: query
-        name: search
-        description: Shows whether a particular domain is available in SAP Translation
-          Hub
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - SAP
-      - Product
-      - Domains
-  /languages:
-    get:
-      summary: Languages that SAP Translation Hub supports.
-      description: Returns a list of the languages that SAP Translation Hub supports.
-        You can also check whether a particualr language is available in SAP Translation
-        Hub.
-      operationId: returns-a-list-of-the-languages-that-sap-translation-hub-supports-you-can-also-check-whether-a-parti
-      x-api-path-slug: languages-get
-      parameters:
-      - in: header
-        name: Content-Type
-        description: Specifies the nature of the data in the body so that the receiving
-          agent can process the data accordingly
-      - in: query
-        name: search
-        description: Determines whether a particular language is available in SAP
-          Translation Hub
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - Languages
-      - That
-      - SAP
-      - Translation
-      - Hub
-      - Supports
-  /suggestions:
-    get:
-      summary: The suggestion resource enables you to get suggestions for short texts
-        during the development process.
-      description: Provides suggestions for short texts based on complete or partial
-        texts and their translations. You can, for example, use the suggestion resource
-        to propose texts while you type texts in a development environment. The texts
-        that the resource proposes are already available in additional languages in
-        the multilingual text repository (MLTR).
-      operationId: provides-suggestions-for-short-texts-based-on-complete-or-partial-texts-and-their-translations-you-c
-      x-api-path-slug: suggestions-get
-      parameters:
-      - in: header
-        name: Content-Type
-        description: Specifies the nature of the data in the body so that the receiving
-          agent can process the data accordingly
-      - in: query
-        name: domain
-        description: Searches for texts in the specified domain(s) or domain group(s)
-      - in: query
-        name: language
-        description: Allows you to search for a text that has translations in the
-          specified language(s)
-      - in: query
-        name: maxLength
-        description: Searches for texts up to the specified number of characters
-      - in: query
-        name: search
-        description: Allows you to search for a text in SAP Translation Hub in English
-      - in: query
-        name: searchLanguage
-        description: Allows you to search for a text in any of the languages that
-          SAP Translation Hub supports
-      - in: query
-        name: texttype
-        description: Allows you to search for a text that is assigned to one or more
-          text types
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - The
-      - Suggestion
-      - Resource
-      - Enables
-      - You
-      - To
-      - Get
-      - Suggestionsshort
-      - Texts
-      - During
-      - Development
-      - Process
-  /texttypes:
-    get:
-      summary: Returns a list of the text types available in SAP Translation Hub.
-      description: In SAP products, short texts, such as those used on user interfaces
-        (UIs), are characterized by various text types. The type of a specific text
-        is determined by the UI element that it describes. For example,  button texts
-        are described by the text type ```XBUT```. <br> The text type resource returns
-        a list of the text types that are available in SAP Translation Hub. You can
-        combine the '/text type' resource with the '/suggestion' resource to narrow
-        down the results of the suggestion resource.
-      operationId: in-sap-products-short-texts-such-as-those-used-on-user-interfaces-uis-are-characterized-by-various-t
-      x-api-path-slug: texttypes-get
-      parameters:
-      - in: header
-        name: Content-Type
-        description: Specifies the nature of the data in the body so that the receiving
-          agent can process the data accordingly
-      - in: query
-        name: search
-        description: Allows you to search for a specific text type, such as message
-      responses:
-        200:
-          description: Successful response
-      tags:
-      - Returns
-      - List
-      - Of
-      - Text
-      - Types
-      - Available
-      - In
-      - SAP
-      - Translation
-      - Hub
 x-streamrank:
   polling_total_time_average: 0
   polling_size_download_average: 0

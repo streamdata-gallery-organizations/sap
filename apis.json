@@ -1,0 +1,33 @@
+{
+	"name": "Streadata.io API Gallery - SAP",
+	"description": "This is a repository of sap APIs, self-contained as a Github repository, with HTML and YAML representations of the APIs and their surrounding operations.",
+	"image": "http://template.streamdata.gallery/assets/sap.png",
+	"created": "2018-02-24",
+	"modified": "2018-08-31",
+	"url": "http://sap.streamdata.gallery/apis.json",
+	"specificationVersion": "0.14",
+	"apis": [
+		{
+			"name": "SAP",
+			"x-api-slug": "sap",
+			"description": "Get software and technology solutions from SAP, the leader in business applications.  Run simple with the best in cloud, analytics, mobile and IT solutions.",
+			"image": "http://kinlane-productions.s3.amazonaws.com/screen-capture-api/28252-www-sap-com.jpg",
+			"humanURL": "https://www.sap.com/index.html",
+			"baseURL": "https://sandbox.api.sap.com//translationhub/api/v1",
+			"tags": "SAP",
+			"properties": [
+				{
+					"type": "x-openapi-spec",
+					"url": "https://raw.githubusercontent.com/streamdata-gallery-organizations/sap/master/_listings/sap/openapi.md"
+				}
+			]
+		}
+	],
+	"tags": "SAP",
+	"include": [
+		{
+			"name": "SAP",
+			"url": "https://raw.githubusercontent.com/streamdata-gallery-organizations/sap/master/_listings/sap/apis.yaml"
+		}
+	]
+}
